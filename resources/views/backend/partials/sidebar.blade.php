@@ -5,14 +5,21 @@ use Illuminate\Support\Str;
 <!-- Top Navbar -->
 <nav class="top-navbar">
     <div class="top-nav-inner">
-        <a class="top-nav-brand" href="/admin">
-            <i class="bi bi-speedometer2"></i>
-            <span>Admin Dashboard</span>
-        </a>
+        <div class="top-nav-left">
+            <a class="top-nav-brand" href="/admin">
+                <i class="bi bi-speedometer2"></i>
+                <span>Admin Dashboard</span>
+            </a>
+        </div>
 
-        <button class="nav-toggler" type="button" onclick="document.getElementById('navbarTopNav').classList.toggle('show')">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="top-nav-right">
+            <button class="nav-toggler" type="button" onclick="document.getElementById('navbarTopNav').classList.toggle('show')">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <button class="sb-toggler" type="button" id="sbToggle" aria-label="Toggle sidebar">
+                <i class="bi bi-three-dots-vertical" id="sbToggleIcon"></i>
+            </button>
+        </div>
 
         <div class="top-nav-links" id="navbarTopNav">
             <a class="nav-link-custom {{ request()->is('/') ? 'active' : '' }}" href="/">
@@ -44,7 +51,8 @@ use Illuminate\Support\Str;
 </nav>
 
 <!-- Sidebar -->
-<aside class="sidebar">
+<div class="sb-backdrop" id="sbBackdrop"></div>
+<aside class="sidebar" id="appSidebar">
     <div class="sidebar-brand">
         <i class="bi bi-layout-sidebar"></i>
         <span>Navigation</span>
@@ -64,14 +72,15 @@ use Illuminate\Support\Str;
 </aside>
 
 <style>
-/* ─── Top Navbar (Dark Theme) ─── */
+/* ─── Top Navbar (Light Theme) ─── */
 .top-navbar {
-    background: linear-gradient(135deg, #0f172a 0%, #131e3a 100%);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
     padding: 10px 24px;
     position: sticky;
     top: 0;
     z-index: 100;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.06);
 }
 .top-nav-inner {
     display: flex;
@@ -80,11 +89,48 @@ use Illuminate\Support\Str;
     max-width: 100%;
     gap: 16px;
 }
+.top-nav-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+.sb-toggler {
+    display: none;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    color: #475569;
+    font-size: 1.15rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+.sb-toggler:hover { background: #eff6ff; color: #2563eb; }
+.sb-toggler:focus { outline: none; }
+.sb-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.5);
+    z-index: 1049;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+.sb-backdrop.show {
+    opacity: 1;
+    visibility: visible;
+}
 .top-nav-brand {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #f1f5f9;
+    color: #1e293b;
     font-weight: 700;
     font-size: 1rem;
     text-decoration: none;
@@ -92,13 +138,13 @@ use Illuminate\Support\Str;
 }
 .top-nav-brand i {
     font-size: 1.3rem;
-    color: #60A5FA;
+    color: #2563eb;
 }
 .nav-toggler {
     display: none;
     background: transparent;
     border: none;
-    color: #94a3b8;
+    color: #64748b;
     font-size: 1.3rem;
     padding: 4px;
     cursor: pointer;
@@ -115,7 +161,7 @@ use Illuminate\Support\Str;
     align-items: center;
     gap: 6px;
     padding: 7px 14px;
-    color: #94a3b8;
+    color: #64748b;
     font-weight: 500;
     font-size: 0.85rem;
     text-decoration: none;
@@ -123,19 +169,19 @@ use Illuminate\Support\Str;
     transition: all 0.2s ease;
 }
 .nav-link-custom:hover {
-    color: #60A5FA;
-    background: rgba(37,99,235,0.08);
+    color: #2563eb;
+    background: #eff6ff;
 }
 .nav-link-custom.active {
-    color: #60A5FA;
-    background: rgba(37,99,235,0.12);
+    color: #2563eb;
+    background: #dbeafe;
 }
 .nav-link-btn {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     padding: 7px 14px;
-    color: #f87171;
+    color: #dc2626;
     font-weight: 600;
     font-size: 0.85rem;
     background: transparent;
@@ -146,8 +192,8 @@ use Illuminate\Support\Str;
     font-family: inherit;
 }
 .nav-link-btn:hover {
-    background: rgba(248,113,113,0.1);
-    color: #ef4444;
+    background: #fee2e2;
+    color: #dc2626;
 }
 .signup-link {
     background: linear-gradient(135deg, #2563EB, #1E40AF);
@@ -160,12 +206,12 @@ use Illuminate\Support\Str;
     box-shadow: 0 4px 12px rgba(37,99,235,0.3);
 }
 
-/* ─── Sidebar (Dark Theme) ─── */
+/* ─── Sidebar (Light Theme) ─── */
 .sidebar {
     width: 250px;
     min-width: 250px;
-    background: linear-gradient(180deg, #0a0f1e 0%, #0f172a 100%);
-    border-right: 1px solid rgba(255,255,255,0.05);
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    border-right: 1px solid #e2e8f0;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -176,16 +222,16 @@ use Illuminate\Support\Str;
     align-items: center;
     gap: 10px;
     padding: 20px 20px 16px;
-    color: #64748b;
+    color: #94a3b8;
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.8px;
     text-transform: uppercase;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid #f1f5f9;
 }
 .sidebar-brand i {
     font-size: 0.9rem;
-    color: #475569;
+    color: #cbd5e1;
 }
 .sidebar-menu {
     list-style: none;
@@ -198,7 +244,7 @@ use Illuminate\Support\Str;
     display: flex;
     align-items: center;
     gap: 12px;
-    color: #94a3b8;
+    color: #64748b;
     padding: 10px 14px;
     font-weight: 500;
     font-size: 0.88rem;
@@ -213,22 +259,22 @@ use Illuminate\Support\Str;
     flex-shrink: 0;
 }
 .sidebar-menu a:hover {
-    background: rgba(37,99,235,0.1);
-    color: #60A5FA;
+    background: #eff6ff;
+    color: #2563eb;
 }
 .sidebar-menu a.active {
-    background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(37,99,235,0.05));
-    color: #60A5FA;
-    border: 1px solid rgba(37,99,235,0.12);
-    box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    box-shadow: 0 2px 8px rgba(37,99,235,0.1);
 }
 .sidebar-footer {
     padding: 14px 20px;
-    border-top: 1px solid rgba(255,255,255,0.04);
+    border-top: 1px solid #f1f5f9;
 }
 .sidebar-version {
     font-size: 0.65rem;
-    color: rgba(148,163,184,0.35);
+    color: #cbd5e1;
     letter-spacing: 1px;
     text-transform: uppercase;
 }
@@ -236,11 +282,15 @@ use Illuminate\Support\Str;
 /* ─── Scrollbar ─── */
 .sidebar::-webkit-scrollbar { width: 4px; }
 .sidebar::-webkit-scrollbar-track { background: transparent; }
-.sidebar::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.12); border-radius: 10px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(100,116,139,0.18); border-radius: 10px; }
 
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
+    .sb-toggler { display: flex; }
     .nav-toggler { display: block; }
+    .top-nav-inner { gap: 8px; }
+    .top-nav-brand { font-size: 0.92rem; }
+    .top-nav-brand span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .top-nav-links {
         display: none;
         flex-direction: column;
@@ -251,18 +301,103 @@ use Illuminate\Support\Str;
         top: 100%;
         left: 0;
         right: 0;
-        background: #0f172a;
-        border-bottom: 1px solid rgba(255,255,255,0.06);
+        background: #ffffff;
+        border-bottom: 1px solid #e2e8f0;
+        box-shadow: 0 8px 16px rgba(15,23,42,0.08);
         z-index: 99;
     }
     .top-nav-links.show {
         display: flex;
     }
-    .sidebar { width: 100%; min-width: 100%; max-height: none; flex-direction: row; flex-wrap: wrap; }
-    .sidebar-brand { display: none; }
-    .sidebar-menu { display: flex; flex-wrap: wrap; padding: 8px; gap: 4px; }
-    .sidebar-menu li { margin-bottom: 0; }
-    .sidebar-menu a { font-size: 0.82rem; padding: 8px 12px; }
-    .sidebar-footer { display: none; }
+    .top-nav-links .nav-link-custom,
+    .top-nav-links .nav-link-btn {
+        padding: 12px 16px;
+        border-radius: 0;
+        justify-content: flex-start;
+    }
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 260px;
+        min-width: 260px;
+        max-width: 85vw;
+        height: 100vh;
+        max-height: 100vh;
+        flex-direction: column;
+        align-items: stretch;
+        background: #ffffff;
+        border-right: 1px solid #e2e8f0;
+        z-index: 1050;
+        overflow-y: auto;
+        transition: left 0.3s ease;
+        box-shadow: none;
+    }
+    .sidebar.open {
+        left: 0;
+        box-shadow: 0 0 60px rgba(15,23,42,0.25);
+    }
+    .sidebar-brand { display: flex; padding-top: 22px; }
+    .sidebar-menu {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        padding: 12px 10px;
+        gap: 2px;
+    }
+    .sidebar-menu li { margin-bottom: 2px; flex-shrink: 1; }
+    .sidebar-menu a { font-size: 0.88rem; padding: 10px 14px; white-space: normal; }
+    .sidebar-footer { display: block; }
 }
+
+/* JS: body scroll lock when drawer is open */
+body.sidebar-open { overflow: hidden; }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var sbToggle = document.getElementById('sbToggle');
+    var sbToggleIcon = document.getElementById('sbToggleIcon');
+    var sidebar = document.getElementById('appSidebar');
+    var backdrop = document.getElementById('sbBackdrop');
+
+    if (!sbToggle || !sidebar) return;
+
+    function openSidebar() {
+        sidebar.classList.add('open');
+        backdrop.classList.add('show');
+        document.body.classList.add('sidebar-open');
+        sbToggleIcon.className = 'bi bi-x-lg';
+    }
+
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        backdrop.classList.remove('show');
+        document.body.classList.remove('sidebar-open');
+        sbToggleIcon.className = 'bi bi-three-dots-vertical';
+    }
+
+    sbToggle.addEventListener('click', function () {
+        if (sidebar.classList.contains('open')) {
+            closeSidebar();
+        } else {
+            openSidebar();
+        }
+    });
+
+    backdrop.addEventListener('click', closeSidebar);
+
+    sidebar.querySelectorAll('a, button').forEach(function (el) {
+        el.addEventListener('click', closeSidebar);
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeSidebar();
+    });
+
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) {
+            closeSidebar();
+        }
+    });
+});
+</script>

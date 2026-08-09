@@ -46,8 +46,8 @@ body {
         "navbar navbar"
         "sidebar content";
     min-height: 100vh;
-    background: #0f172a;
-    color: #f1f5f9;
+    background: #f1f5f9;
+    color: #1e293b;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -64,7 +64,7 @@ main.content-area {
     grid-area: content;
     overflow-y: auto;
     max-height: calc(100vh - 57px);
-    background: #0f172a;
+    background: #f1f5f9;
 }
 
 /* ─── Responsive ─── */
@@ -79,6 +79,7 @@ main.content-area {
 @media (max-width: 768px) {
     body {
         grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr;
         grid-template-areas:
             "navbar"
             "sidebar"
@@ -89,12 +90,20 @@ main.content-area {
         overflow: visible;
     }
 }
+@media (max-width: 480px) {
+    body {
+        grid-template-rows: auto auto 1fr;
+    }
+    main.content-area {
+        overflow: visible;
+    }
+}
 
 /* ─── Scrollbar ─── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.2); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(148,163,184,0.35); }
+::-webkit-scrollbar-thumb { background: rgba(100,116,139,0.25); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(100,116,139,0.45); }
 
 /* ─── Pagination (global style for all backend pages) ─── */
 .pagination {
@@ -103,6 +112,7 @@ main.content-area {
     list-style: none;
     margin: 0;
     padding: 0;
+    flex-wrap: wrap;
 }
 .pagination .page-item .page-link {
     display: grid;
@@ -110,20 +120,20 @@ main.content-area {
     min-width: 34px;
     height: 34px;
     padding: 0 10px;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid #e2e8f0;
     border-radius: 8px;
     font-size: 0.78rem;
     font-weight: 500;
-    color: #94a3b8;
+    color: #64748b;
     text-decoration: none;
-    background: rgba(255,255,255,0.03);
+    background: #ffffff;
     transition: all 0.2s;
     font-family: inherit;
 }
 .pagination .page-item .page-link:hover {
-    background: rgba(37,99,235,0.1);
-    border-color: rgba(37,99,235,0.2);
-    color: #60A5FA;
+    background: #eff6ff;
+    border-color: #bfdbfe;
+    color: #2563eb;
 }
 .pagination .page-item.active .page-link {
     background: linear-gradient(135deg, #2563EB, #1E40AF);
@@ -136,28 +146,28 @@ main.content-area {
     pointer-events: none;
 }
 
-/* ─── Swal2 Dark Override ─── */
+/* ─── Swal2 Light Override ─── */
 .swal2-popup {
-    background: #1e293b !important;
-    color: #f1f5f9 !important;
-    border: 1px solid rgba(255,255,255,0.06) !important;
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border: 1px solid #e2e8f0 !important;
     border-radius: 16px !important;
 }
-.swal2-title { color: #f1f5f9 !important; }
-.swal2-html-container { color: #94a3b8 !important; }
+.swal2-title { color: #1e293b !important; }
+.swal2-html-container { color: #64748b !important; }
 .swal2-confirm.swal2-styled {
     background: linear-gradient(135deg, #2563EB, #1E40AF) !important;
     box-shadow: none !important;
 }
 .swal2-cancel.swal2-styled {
-    background: rgba(255,255,255,0.06) !important;
-    color: #94a3b8 !important;
-    border: 1px solid rgba(255,255,255,0.08) !important;
+    background: #f1f5f9 !important;
+    color: #64748b !important;
+    border: 1px solid #e2e8f0 !important;
 }
 .swal2-toast {
-    background: #1e293b !important;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3) !important;
-    border: 1px solid rgba(255,255,255,0.06) !important;
+    background: #ffffff !important;
+    box-shadow: 0 8px 32px rgba(15,23,42,0.12) !important;
+    border: 1px solid #e2e8f0 !important;
 }
 </style>
 
