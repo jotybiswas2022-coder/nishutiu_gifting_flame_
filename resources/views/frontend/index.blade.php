@@ -566,6 +566,149 @@
         transform: translateY(-3px);
     }
 
+    /* Latest items */
+    .nf-item-card {
+        background: #FFFFFF;
+        border: 1px solid rgba(255, 77, 109, 0.14);
+        border-radius: 24px;
+        overflow: hidden;
+        height: 100%;
+        transition: all 0.35s ease;
+        box-shadow: 0 10px 28px rgba(255, 77, 109, 0.08);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .nf-item-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 28px 50px rgba(255, 77, 109, 0.2);
+        border-color: rgba(255, 77, 109, 0.4);
+    }
+
+    .nf-item-img {
+        position: relative;
+        aspect-ratio: 4 / 3;
+        background: linear-gradient(135deg, #FFE3E9, #FFF0C2);
+        overflow: hidden;
+    }
+
+    .nf-item-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s ease;
+    }
+
+    .nf-item-card:hover .nf-item-img img { transform: scale(1.06); }
+
+    .nf-item-noimg {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3.5rem;
+    }
+
+    .nf-item-flag {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: linear-gradient(135deg, #FF4D6D, #C9184A);
+        color: #FFFFFF;
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        padding: 0.35rem 0.85rem;
+        border-radius: 50rem;
+        box-shadow: 0 6px 14px rgba(255, 77, 109, 0.35);
+    }
+
+    .nf-item-cat {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(4px);
+        color: #C9184A;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        padding: 0.32rem 0.85rem;
+        border-radius: 50rem;
+        border: 1px solid rgba(255, 77, 109, 0.2);
+    }
+
+    .nf-item-body {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .nf-item-name {
+        font-family: 'Playfair Display', serif;
+        font-weight: 800;
+        font-size: 1.15rem;
+        color: #1F1F1F;
+        margin-bottom: 0.4rem;
+    }
+
+    .nf-item-desc {
+        flex: 1;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1rem;
+        color: #8A6E78;
+        margin-bottom: 1.1rem;
+    }
+
+    .nf-item-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.8rem;
+    }
+
+    .nf-item-price {
+        font-family: 'Playfair Display', serif;
+        font-weight: 800;
+        font-size: 1.35rem;
+        color: #C9184A;
+    }
+
+    .nf-item-price small {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #A08A92;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .nf-item-btn {
+        white-space: nowrap;
+        border: none;
+        background: linear-gradient(135deg, #FF4D6D, #C9184A);
+        color: #FFFFFF;
+        font-weight: 700;
+        font-size: 0.82rem;
+        padding: 0.55rem 1.1rem;
+        border-radius: 50rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .nf-item-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 24px rgba(255, 77, 109, 0.4);
+        color: #FFFFFF;
+    }
+
     /* Footer */
     .nf-footer {
         background: #1F1F1F;
@@ -668,6 +811,57 @@
         <div class="nf-marquee-track" aria-hidden="true">
             <span>Birthdays <i class="bi bi-balloon-fill"></i> Anniversaries <i class="bi bi-heart-fill"></i> Weddings <i class="bi bi-gem"></i> New Babies <i class="bi bi-emoji-sunglasses-fill"></i> Thank You <i class="bi bi-award-fill"></i> Just Because <i class="bi bi-flower1"></i></span>
             <span>Birthdays <i class="bi bi-balloon-fill"></i> Anniversaries <i class="bi bi-heart-fill"></i> Weddings <i class="bi bi-gem"></i> New Babies <i class="bi bi-emoji-sunglasses-fill"></i> Thank You <i class="bi bi-award-fill"></i> Just Because <i class="bi bi-flower1"></i></span>
+        </div>
+    </section>
+
+    <!-- ===== LATEST ITEMS ===== -->
+    <section id="latest" class="py-5" style="background:#FFF5F7;">
+        <div class="container py-4">
+            <div class="d-flex flex-wrap align-items-end justify-content-between gap-3 mb-5">
+                <div>
+                    <span class="nf-section-tag">Latest Items</span>
+                    <h2 class="nf-section-title mb-2">Fresh from <span style="color:#FF4D6D;">the heart</span></h2>
+                    <p class="nf-section-sub mb-0">The newest gifts, wrapped with gold and ready to travel to a loved one.</p>
+                </div>
+                <a href="{{ route('contact.page') }}" class="nf-cat-link">See all gifts <i class="bi bi-arrow-right"></i></a>
+            </div>
+
+            @if($latestItems->isNotEmpty())
+                <div class="row g-4">
+                    @foreach ($latestItems as $item)
+                        @php $img = $item->images->first(); @endphp
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="nf-item-card">
+                                <a href="{{ route('contact.page') }}" class="nf-item-img d-block">
+                                    @if($img)
+                                        <img src="{{ route('item.image', $img) }}" alt="{{ $item->name }}" loading="lazy">
+                                    @else
+                                        <div class="nf-item-noimg"><span>🎁</span></div>
+                                    @endif
+                                    <span class="nf-item-flag">New</span>
+                                    @if($item->category)
+                                        <span class="nf-item-cat">{{ $item->category->name }}</span>
+                                    @endif
+                                </a>
+                                <div class="nf-item-body">
+                                    <h5 class="nf-item-name">{{ $item->name }}</h5>
+                                    <p class="nf-item-desc">{{ \Illuminate\Support\Str::limit($item->details, 80) }}</p>
+                                    <div class="nf-item-foot">
+                                        <span class="nf-item-price">৳ {{ number_format($item->price, 2) }}</span>
+                                        <a href="{{ route('contact.page') }}" class="nf-item-btn"><i class="bi bi-whatsapp"></i> Ask for it</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="nf-owner-card text-center" style="max-width:640px;margin:0 auto;">
+                    <div style="font-size:3rem;margin-bottom:0.6rem;">🎁</div>
+                    <h5 class="nf-serif fw-bold">Fresh gifts are on the way</h5>
+                    <p class="nf-section-sub">New treasures are being wrapped as we speak — check back soon.</p>
+                </div>
+            @endif
         </div>
     </section>
 
