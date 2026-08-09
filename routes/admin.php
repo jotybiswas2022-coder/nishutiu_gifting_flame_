@@ -5,11 +5,22 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\OwnerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ItemController;
+use App\Http\Controllers\Admin\CustomerReviewController;
 
 
 Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/contact', [AdminController::class, 'contacts'])->name('contact.index');
+
+    Route::controller(CustomerReviewController::class)->prefix('reviews')->group(function () {
+        Route::get('/', 'index')->name('admin.review.index');
+        Route::get('/create', 'create')->name('admin.review.create');
+        Route::post('/', 'store')->name('admin.review.store');
+        Route::get('/{review}/edit', 'edit')->name('admin.review.edit');
+        Route::put('/{review}', 'update')->name('admin.review.update');
+        Route::delete('/{review}', 'destroy')->name('admin.review.destroy');
+        Route::get('/{review}/image', 'image')->name('admin.review.image');
+    });
 
     Route::controller(OwnerController::class)->prefix('owners')->group(function () {
         Route::get('/', 'index')->name('admin.owner.index');

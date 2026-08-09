@@ -60,6 +60,13 @@ use Illuminate\Support\Str;
                 <span>Contact</span>
             </a>
         </li>
+        <li>
+            <a href="{{ url('/admin/reviews') }}"
+               class="{{ request()->is('admin/reviews') ? 'active' : '' }}">
+                <i class="bi bi-chat-square-heart-fill"></i>
+                <span>Customer Review</span>
+            </a>
+        </li>
         <li class="sidebar-mobile-item">
             <a href="{{ url('/') }}">
                 <i class="bi bi-house-door"></i>
