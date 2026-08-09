@@ -23,44 +23,13 @@ class SiteController extends Controller
         return view('frontend.contact');
     }
 
-    public function items(Request $request)
+    public function itemsRedirect()
     {
-        $q = trim((string) $request->query('q', ''));
+        $category = Category::find(3) ?? Category::has('items')->orderBy('name')->first();
 
-        $categoriesQuery = Category::query()
-            ->with(['items' => function ($query) {
-                $query->with('images')->latest();
-            }])
-            ->orderBy('name');
+        abort_unless($category, 404);
 
-        if ($q !== '') {
-            $categoriesQuery->where(function ($query) use ($q) {
-                $query->where('name', 'like', "%{$q}%")
-                    ->orWhereHas('items', function ($itemQuery) use ($q) {
-                        $itemQuery->where('name', 'like', "%{$q}%")
-                            ->orWhere('details', 'like', "%{$q}%");
-                    });
-            });
-        }
-
-        $categories = $categoriesQuery->get();
-
-        if ($q !== '') {
-            foreach ($categories as $category) {
-                $category->setRelation('items', $category->items->filter(function ($item) use ($q) {
-                    $needle = strtolower($q);
-                    return strpos(strtolower($item->name), $needle) !== false
-                        || ($item->details && strpos(strtolower($item->details), $needle) !== false);
-                })->values());
-            }
-            $categories = $categories->filter(fn ($c) => $c->items->isNotEmpty())->values();
-        }
-
-        $categories = $categories->filter(fn ($c) => $c->items->isNotEmpty())->values();
-
-        $totalItems = $categories->sum(fn ($c) => $c->items->count());
-
-        return view('frontend.items', compact('categories', 'totalItems', 'q'));
+        return redirect()->route('items.category', $category);
     }
 
     public function categoryItems(Request $request, Category $category)

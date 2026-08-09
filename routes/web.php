@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\CategoryController;
 Route::controller(SiteController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/contact', 'contact')->name('contact.page');
-    Route::get('/items', 'items')->name('items.index');
+    Route::get('/items', 'itemsRedirect')->name('items.index');
     Route::get('/items/{category}', 'categoryItems')->name('items.category');
     Route::get('/item/{item}', 'show')->name('items.show');
 });
