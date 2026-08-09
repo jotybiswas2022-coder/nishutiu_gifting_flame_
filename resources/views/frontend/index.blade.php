@@ -475,6 +475,97 @@
     .nf-cta .nf-cta-2 { top: 1.4rem; right: 3.5rem; animation-delay: 1s; }
     .nf-cta .nf-cta-3 { bottom: 1.6rem; left: 8rem; animation-delay: 2s; font-size: 1.8rem; }
 
+    /* Owner's info */
+    .nf-owner-card {
+        position: relative;
+        background: #FFFFFF;
+        border: 1px solid rgba(255, 77, 109, 0.14);
+        border-radius: 24px;
+        padding: 2.4rem 1.6rem 2rem;
+        text-align: center;
+        transition: all 0.35s ease;
+        height: 100%;
+        box-shadow: 0 10px 28px rgba(255, 77, 109, 0.08);
+        overflow: hidden;
+    }
+
+    .nf-owner-card::before {
+        content: '';
+        position: absolute;
+        top: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 209, 102, 0.35), transparent 70%);
+    }
+
+    .nf-owner-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 26px 48px rgba(255, 77, 109, 0.18);
+        border-color: rgba(255, 77, 109, 0.4);
+    }
+
+    .nf-owner-photo {
+        position: relative;
+        width: 108px;
+        height: 108px;
+        margin: 0 auto 1.2rem;
+        border-radius: 50%;
+        padding: 6px;
+        background: linear-gradient(135deg, #FFD166, #FF4D6D);
+        box-shadow: 0 14px 30px rgba(255, 77, 109, 0.25);
+    }
+
+    .nf-owner-photo img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #FFFFFF;
+        display: block;
+    }
+
+    .nf-owner-name {
+        font-family: 'Playfair Display', serif;
+        font-weight: 800;
+        font-size: 1.25rem;
+        color: #1F1F1F;
+        margin-bottom: 0.25rem;
+    }
+
+    .nf-owner-role {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 0.95rem;
+        color: #8A6E78;
+        margin-bottom: 1.1rem;
+    }
+
+    .nf-owner-social { display: flex; justify-content: center; gap: 0.6rem; }
+
+    .nf-owner-social a {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #C9184A;
+        background: #FFE3E9;
+        border: 1px solid rgba(255, 77, 109, 0.2);
+        transition: all 0.3s ease;
+        font-size: 1.05rem;
+        text-decoration: none;
+    }
+
+    .nf-owner-social a:hover {
+        background: linear-gradient(135deg, #FF4D6D, #C9184A);
+        color: #FFFFFF;
+        border-color: transparent;
+        transform: translateY(-3px);
+    }
+
     /* Footer */
     .nf-footer {
         background: #1F1F1F;
@@ -754,6 +845,46 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- ===== OWNERS ===== -->
+    <section id="owners" class="py-5">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <span class="nf-section-tag">The Founders</span>
+                <h2 class="nf-section-title">The hearts behind <span style="color:#FF4D6D;">Nishutiu</span></h2>
+                <p class="nf-section-sub">Meet the people who warm every ribbon, write every note, and wrap every feeling with love.</p>
+            </div>
+            @if($owners->isNotEmpty())
+                <div class="row g-4 justify-content-center">
+                    @foreach ($owners as $owner)
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="nf-owner-card">
+                                <div class="nf-owner-photo">
+                                    <img src="{{ route('owner.photo', $owner) }}" alt="{{ $owner->name }}" loading="lazy">
+                                </div>
+                                <h5 class="nf-owner-name">{{ $owner->name }}</h5>
+                                <p class="nf-owner-role">Founder &amp; Owner</p>
+                                <div class="nf-owner-social">
+                                    @if($owner->facebook)
+                                        <a href="{{ $owner->facebook }}" target="_blank" rel="noopener" title="Facebook"><i class="bi bi-facebook"></i></a>
+                                    @endif
+                                    @if($owner->instagram)
+                                        <a href="{{ $owner->instagram }}" target="_blank" rel="noopener" title="Instagram"><i class="bi bi-instagram"></i></a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="text-center py-4">
+                    <div style="font-size:3rem;margin-bottom:0.6rem;">🕊️</div>
+                    <h5 class="nf-serif fw-bold">Our founders are getting ready</h5>
+                    <p class="nf-section-sub">Stay close — the faces behind the flame will appear here soon.</p>
+                </div>
+            @endif
         </div>
     </section>
 

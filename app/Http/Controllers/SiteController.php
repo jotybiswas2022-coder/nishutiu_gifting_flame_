@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Account;
+use App\Models\Owner;
 
 class SiteController extends Controller
 {
     public function index(){
 
-        return view('frontend.index');
+        $owners = Owner::latest()->get();
+
+        return view('frontend.index', compact('owners'));
     }
 
     public function contact()
