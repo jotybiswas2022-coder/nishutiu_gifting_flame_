@@ -82,4 +82,18 @@ class SiteController extends Controller
 
         return view('frontend.category', compact('category', 'items', 'categories', 'q'));
     }
+
+    public function show(Item $item)
+    {
+        $item->load('category', 'images');
+
+        $related = Item::with('images')
+            ->where('category_id', $item->category_id)
+            ->where('id', '!=', $item->id)
+            ->latest()
+            ->take(3)
+            ->get();
+
+        return view('frontend.item', compact('item', 'related'));
+    }
 }

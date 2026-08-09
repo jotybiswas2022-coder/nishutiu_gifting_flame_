@@ -257,12 +257,16 @@
         box-shadow: 0 10px 28px rgba(255, 77, 109, 0.08);
         display: flex;
         flex-direction: column;
+        text-decoration: none;
+        color: inherit;
     }
 
     .nf-item-card:hover {
         transform: translateY(-10px);
         box-shadow: 0 28px 50px rgba(255, 77, 109, 0.2);
         border-color: rgba(255, 77, 109, 0.4);
+        color: inherit;
+        text-decoration: none;
     }
 
     .nf-item-img {

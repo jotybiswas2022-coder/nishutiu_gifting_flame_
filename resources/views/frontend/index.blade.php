@@ -823,36 +823,13 @@
                     <h2 class="nf-section-title mb-2">Fresh from <span style="color:#FF4D6D;">the heart</span></h2>
                     <p class="nf-section-sub mb-0">The newest gifts, wrapped with gold and ready to travel to a loved one.</p>
                 </div>
-                <a href="{{ route('contact.page') }}" class="nf-cat-link">See all gifts <i class="bi bi-arrow-right"></i></a>
+                <a href="{{ route('items.index') }}" class="nf-cat-link">See all gifts <i class="bi bi-arrow-right"></i></a>
             </div>
 
             @if($latestItems->isNotEmpty())
                 <div class="row g-4">
                     @foreach ($latestItems as $item)
-                        @php $img = $item->images->first(); @endphp
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="nf-item-card">
-                                <a href="{{ route('contact.page') }}" class="nf-item-img d-block">
-                                    @if($img)
-                                        <img src="{{ route('item.image', $img) }}" alt="{{ $item->name }}" loading="lazy">
-                                    @else
-                                        <div class="nf-item-noimg"><span>🎁</span></div>
-                                    @endif
-                                    <span class="nf-item-flag">New</span>
-                                    @if($item->category)
-                                        <span class="nf-item-cat">{{ $item->category->name }}</span>
-                                    @endif
-                                </a>
-                                <div class="nf-item-body">
-                                    <h5 class="nf-item-name">{{ $item->name }}</h5>
-                                    <p class="nf-item-desc">{{ \Illuminate\Support\Str::limit($item->details, 80) }}</p>
-                                    <div class="nf-item-foot">
-                                        <span class="nf-item-price">৳ {{ number_format($item->price, 2) }}</span>
-                                        <a href="{{ route('contact.page') }}" class="nf-item-btn"><i class="bi bi-whatsapp"></i> Ask for it</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @include('frontend.partials.item-card', ['item' => $item])
                     @endforeach
                 </div>
             @else

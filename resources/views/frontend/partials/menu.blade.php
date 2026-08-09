@@ -41,6 +41,13 @@ use Illuminate\Support\Str;
 
         <!-- Right: auth actions (login/signup or logout) -->
         <ul class="navbar-nav align-items-center gap-2 flex-shrink-0 chatbox-auth-right me-3 mt-2 mt-lg-0">
+            @php $cartCount = count(session('cart', [])); @endphp
+            <li class="nav-item">
+                <a href="{{ route('cart.index') }}" class="chatbox-cart-link" title="My cart">
+                    <i class="bi bi-bag-heart"></i>
+                    <span class="chatbox-cart-badge" id="cartBadge" style="{{ $cartCount > 0 ? '' : 'display:none;' }}">{{ $cartCount }}</span>
+                </a>
+            </li>
             @auth
             <li class="nav-item">
                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
@@ -1070,6 +1077,47 @@ body.chatbox-message-active {
   .chatbox-auth-right {
     margin-top: 0.5rem !important;
   }
+}
+
+/* ===== NAVBAR CART LINK ===== */
+.chatbox-cart-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #F6EDF0;
+    color: var(--clr-text);
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.chatbox-cart-link:hover {
+    background: var(--clr-gradient);
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(255, 77, 109, 0.35);
+    text-decoration: none;
+}
+
+.chatbox-cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #C9184A;
+    color: #FFFFFF;
+    font-size: 0.64rem;
+    font-weight: 800;
+    min-width: 18px;
+    height: 18px;
+    line-height: 16px;
+    text-align: center;
+    border-radius: 50rem;
+    border: 2px solid #FFFFFF;
+    padding: 0 4px;
 }
 
 /* Utility Classes */
