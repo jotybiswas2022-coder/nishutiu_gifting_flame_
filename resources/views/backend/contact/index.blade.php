@@ -44,29 +44,9 @@
                                 <td class="text-start fw-semibold">{{ $contact->name }}</td>
                                 <td><span class="contact-email">{{ $contact->email }}</span></td>
                                 <td class="text-start">
-                                    <button class="btn-view-msg" data-bs-toggle="modal" data-bs-target="#messageModal{{ $contact->id }}">
+                                    <button class="btn-view-msg" onclick="openMsgModal(this)" data-name="{{ $contact->name }}" data-message="{{ $contact->message }}">
                                         <i class="bi bi-eye me-1"></i> View Message
                                     </button>
-
-                                    {{-- Message Modal --}}
-                                    <div class="modal fade" id="messageModal{{ $contact->id }}" tabindex="-1" aria-labelledby="messageModalLabel{{ $contact->id }}" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                                            <div class="contact-modal-content">
-                                                <div class="contact-modal-header">
-                                                    <h5 class="contact-modal-title" id="messageModalLabel{{ $contact->id }}">
-                                                        <i class="bi bi-chat-dots me-2"></i> Message from {{ $contact->name }}
-                                                    </h5>
-                                                    <button type="button" class="contact-modal-close" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
-                                                </div>
-                                                <div class="contact-modal-body">
-                                                    <p>{{ $contact->message }}</p>
-                                                </div>
-                                                <div class="contact-modal-footer">
-                                                    <button type="button" class="btn-contact-close" data-bs-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </td>
                                 <td><span class="date-badge">{{ \Carbon\Carbon::parse($contact->created_at)->timezone('Asia/Dhaka')->format('d M Y') }}</span></td>
                                 <td><span class="time-badge">{{ \Carbon\Carbon::parse($contact->created_at)->timezone('Asia/Dhaka')->format('h:i A') }}</span></td>
@@ -85,6 +65,22 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+</div>
+
+{{-- Custom message modal (placed outside backdrop-filtered containers) --}}
+<div class="cm-modal" id="cmModal" aria-hidden="true">
+    <div class="cm-modal-box">
+        <div class="cm-modal-header">
+            <h5 class="cm-modal-title" id="cmModalTitle"><i class="bi bi-chat-dots me-2"></i> <span id="cmModalName"></span></h5>
+            <button type="button" class="cm-modal-close" onclick="closeMsgModal()"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="cm-modal-body">
+            <p id="cmModalBody"></p>
+        </div>
+        <div class="cm-modal-footer">
+            <button type="button" class="cm-modal-btn-close" onclick="closeMsgModal()">Close</button>
         </div>
     </div>
 </div>
@@ -196,6 +192,78 @@
 .empty-icon { font-size: 40px; color: var(--csub); margin-bottom: 8px; display: block; }
 .empty-title { font-weight: 600; font-size: 16px; color: var(--cmuted); }
 .empty-sub { font-size: 13px; color: var(--csub); }
+
+/* Custom message modal */
+.cm-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.55);
+    overscroll-behavior: contain;
+}
+.cm-modal.open { display: flex; }
+.cm-modal-box {
+    width: 100%;
+    max-width: 620px;
+    max-height: 82vh;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid var(--cborder);
+    border-radius: 16px;
+    box-shadow: 0 25px 60px rgba(15, 23, 42, 0.25);
+    overflow: hidden;
+    animation: cm-modal-in 0.22s ease-out;
+}
+@keyframes cm-modal-in {
+    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.cm-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(37,99,235,0.02));
+    border-bottom: 1px solid var(--cborder);
+}
+.cm-modal-title { font-size: 17px; font-weight: 600; color: var(--ctext); margin: 0; min-width: 0; }
+.cm-modal-title i { color: var(--cprimary); }
+.cm-modal-title span { word-break: break-word; }
+.cm-modal-close {
+    background: none; border: none; color: var(--cmuted); font-size: 14px;
+    cursor: pointer; padding: 6px; border-radius: 6px; transition: all 0.2s;
+    width: 32px; height: 32px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+}
+.cm-modal-close:hover { background: var(--cborder); color: var(--ctext); }
+.cm-modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    color: var(--ctext);
+    font-size: 15px;
+    line-height: 1.7;
+    word-break: break-word;
+}
+.cm-modal-body p { margin: 0; color: var(--ctext); white-space: pre-line; }
+.cm-modal-footer {
+    padding: 14px 24px;
+    border-top: 1px solid var(--cborder);
+    display: flex;
+    justify-content: flex-end;
+}
+.cm-modal-btn-close {
+    background: #f1f5f9; border: 1px solid var(--cborder);
+    color: var(--cmuted); padding: 8px 24px; border-radius: 8px;
+    font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease;
+}
+.cm-modal-btn-close:hover { background: var(--cborder); color: var(--ctext); }
+body.cm-modal-open main.content-area { overflow: hidden; }
 @media (max-width: 992px) {
     .contact-page { padding: 20px 22px; }
     .contact-table td, .contact-table th { padding: 12px 14px; font-size: 13px; }
@@ -242,7 +310,44 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    var cmModal = document.getElementById('cmModal');
+
+    if (cmModal) {
+        cmModal.addEventListener('click', function (e) {
+            if (e.target === cmModal) {
+                closeMsgModal();
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && cmModal.classList.contains('open')) {
+                closeMsgModal();
+            }
+        });
+    }
 });
+
+function openMsgModal(btn) {
+    var cmModal = document.getElementById('cmModal');
+    if (!cmModal) return;
+
+    document.getElementById('cmModalName').textContent = btn.getAttribute('data-name');
+    document.getElementById('cmModalBody').textContent = btn.getAttribute('data-message');
+
+    cmModal.classList.add('open');
+    cmModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('cm-modal-open');
+}
+
+function closeMsgModal() {
+    var cmModal = document.getElementById('cmModal');
+    if (!cmModal) return;
+
+    cmModal.classList.remove('open');
+    cmModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('cm-modal-open');
+}
 </script>
 
 @endsection
