@@ -40,6 +40,13 @@ use Illuminate\Support\Str;
             </a>
         </li>
         <li>
+            <a href="{{ url('/admin/categories') }}"
+               class="{{ request()->is('admin/categories') ? 'active' : '' }}">
+                <i class="bi bi-collection-fill"></i>
+                <span>Category</span>
+            </a>
+        </li>
+        <li>
             <a href="{{ url('/admin/contact') }}"
                class="{{ request()->is('admin/contact') ? 'active' : '' }}">
                 <i class="bi bi-envelope-fill"></i>
