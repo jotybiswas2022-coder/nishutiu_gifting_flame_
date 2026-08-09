@@ -16,6 +16,16 @@ class OwnerController extends Controller
         return view('backend.owner.index', compact('owners'));
     }
 
+    public function create()
+    {
+        return view('backend.owner.create');
+    }
+
+    public function edit(Owner $owner)
+    {
+        return view('backend.owner.edit', compact('owner'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
