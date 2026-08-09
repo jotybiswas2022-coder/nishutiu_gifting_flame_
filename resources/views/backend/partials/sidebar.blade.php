@@ -67,6 +67,13 @@ use Illuminate\Support\Str;
                 <span>Customer Review</span>
             </a>
         </li>
+        <li>
+            <a href="{{ url('/admin/settings') }}"
+               class="{{ request()->is('admin/settings') ? 'active' : '' }}">
+                <i class="bi bi-gear-fill"></i>
+                <span>Settings</span>
+            </a>
+        </li>
         <li class="sidebar-mobile-item">
             <a href="{{ url('/') }}">
                 <i class="bi bi-house-door"></i>
