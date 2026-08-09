@@ -955,42 +955,6 @@
         </div>
     </section>
 
-    <!-- ===== HOW IT WORKS ===== -->
-    <section class="py-5">
-        <div class="container py-4">
-            <div class="text-center mb-5">
-                <span class="nf-section-tag">How It Works</span>
-                <h2 class="nf-section-title">From your heart to their hands</h2>
-                <p class="nf-section-sub">Simple, warm, and always personal.</p>
-            </div>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="nf-step">
-                        <div class="nf-step-num">1</div>
-                        <h5>Choose the feeling</h5>
-                        <p>Pick the occasion or a feeling and we curate the warmth of gifts around it.</p>
-                        <span class="nf-step-arrow"><i class="bi bi-arrow-right-circle-fill"></i></span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="nf-step">
-                        <div class="nf-step-num">2</div>
-                        <h5>Add a personal note</h5>
-                        <p>Write your own message on elegant paper, sealed with a golden flame.</p>
-                        <span class="nf-step-arrow"><i class="bi bi-arrow-right-circle-fill"></i></span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="nf-step">
-                        <div class="nf-step-num">3</div>
-                        <h5>Receive the warmth</h5>
-                        <p>Premium-wrapped gifts delivered to the door — surprises that swell the heart.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- ===== TESTIMONIALS ===== -->
     <section id="gifts" class="py-5" style="background:linear-gradient(180deg,#FFF5F7 0%,#FFE9EE 100%);">
         <div class="container py-4">
