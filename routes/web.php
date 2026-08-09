@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\CustomerReviewController;
 Route::controller(SiteController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/contact', 'contact')->name('contact.page');
+    Route::post('/contact', 'contactSubmit')->name('contact.submit');
     Route::get('/items', 'items')->name('items.index');
     Route::get('/items/{category}', 'categoryItems')->name('items.category');
     Route::get('/item/{item}', 'show')->name('items.show');
