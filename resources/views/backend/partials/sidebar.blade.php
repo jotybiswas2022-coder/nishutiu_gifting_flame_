@@ -47,6 +47,13 @@ use Illuminate\Support\Str;
             </a>
         </li>
         <li>
+            <a href="{{ url('/admin/items') }}"
+               class="{{ request()->is('admin/items') ? 'active' : '' }}">
+                <i class="bi bi-box-seam-fill"></i>
+                <span>Item</span>
+            </a>
+        </li>
+        <li>
             <a href="{{ url('/admin/contact') }}"
                class="{{ request()->is('admin/contact') ? 'active' : '' }}">
                 <i class="bi bi-envelope-fill"></i>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\OwnerController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ItemController;
 
 
 Route::prefix('admin')->middleware('admin')->group(function () {
@@ -28,5 +29,15 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         Route::put('/{category}', 'update')->name('admin.category.update');
         Route::delete('/{category}', 'destroy')->name('admin.category.destroy');
         Route::get('/{category}/photo', 'photo')->name('admin.category.photo');
+    });
+
+    Route::controller(ItemController::class)->prefix('items')->group(function () {
+        Route::get('/', 'index')->name('admin.item.index');
+        Route::get('/create', 'create')->name('admin.item.create');
+        Route::post('/', 'store')->name('admin.item.store');
+        Route::get('/{item}/edit', 'edit')->name('admin.item.edit');
+        Route::put('/{item}', 'update')->name('admin.item.update');
+        Route::delete('/{item}', 'destroy')->name('admin.item.destroy');
+        Route::get('/image/{itemImage}', 'image')->name('admin.item.image');
     });
 });
