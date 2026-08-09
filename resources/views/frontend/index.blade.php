@@ -709,6 +709,110 @@
         color: #FFFFFF;
     }
 
+    /* Customer reviews (screenshot frames) */
+    .nf-reviews {
+        background:
+            radial-gradient(600px 380px at 12% 0%, rgba(255, 209, 102, 0.16), transparent 60%),
+            radial-gradient(600px 420px at 90% 100%, rgba(255, 77, 109, 0.28), transparent 60%),
+            linear-gradient(160deg, #2A0A14 0%, #4A1224 55%, #2A0A14 100%);
+        color: #FFFFFF;
+        overflow: hidden;
+    }
+
+    .nf-reviews .nf-section-tag {
+        background: rgba(255, 209, 102, 0.14);
+        color: #FFD166;
+        border-color: rgba(255, 209, 102, 0.35);
+    }
+
+    .nf-reviews .nf-section-title { color: #FFFFFF; }
+    .nf-reviews .nf-section-sub { color: #C9B8C0; }
+
+    .nf-review-frame {
+        position: relative;
+        background: #FFFFFF;
+        padding: 0.7rem 0.7rem 0;
+        border-radius: 18px;
+        box-shadow: 0 22px 44px rgba(0, 0, 0, 0.38);
+        transform: rotate(-2deg);
+        transition: all 0.35s ease;
+        margin: 0;
+    }
+
+    .nf-review-frame:nth-child(3n) { transform: rotate(2deg); }
+    .nf-review-frame:nth-child(2n) { transform: rotate(-1.2deg); }
+
+    .nf-review-frame:hover {
+        transform: rotate(0deg) translateY(-8px);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .nf-review-frame > a {
+        display: block;
+        overflow: hidden;
+        border-radius: 12px;
+    }
+
+    .nf-review-frame img {
+        width: 100%;
+        display: block;
+        aspect-ratio: 3 / 4;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .nf-review-frame:hover img { transform: scale(1.05); }
+
+    .nf-review-frame figcaption {
+        padding: 0.7rem 0.15rem 0.85rem;
+    }
+
+    .nf-review-name {
+        font-family: 'Playfair Display', serif;
+        font-weight: 800;
+        font-size: 0.92rem;
+        color: #1F1F1F;
+        margin-bottom: 0.1rem;
+    }
+
+    .nf-review-caption {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 0.92rem;
+        color: #6B5860;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .nf-review-stamp {
+        position: absolute;
+        top: 12px;
+        right: 0;
+        background: linear-gradient(135deg, #FFD166, #FFB300);
+        color: #1F1F1F;
+        font-size: 0.6rem;
+        font-weight: 800;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        padding: 0.32rem 0.85rem;
+        border-radius: 50rem 0 0 50rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 2;
+    }
+
+    .nf-review-empty {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px dashed rgba(255, 209, 102, 0.35);
+        border-radius: 22px;
+        padding: 3rem 2rem;
+        max-width: 520px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .nf-review-empty h5 { font-family: 'Playfair Display', serif; font-weight: 800; color: #FFD166; }
+
     /* Footer */
     .nf-footer {
         background: #1F1F1F;
@@ -1023,6 +1127,44 @@
         </div>
     </section>
 
+    <!-- ===== CUSTOMER REVIEWS ===== -->
+    <section class="nf-reviews py-5">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <span class="nf-section-tag"><i class="bi bi-chat-quote"></i> Customer Reviews</span>
+                <h2 class="nf-section-title">Screenshots from <span style="color:#FFD166;">real, happy hearts</span></h2>
+                <p class="nf-section-sub">Precious proof straight from our customers — every frame is a real conversation with us.</p>
+            </div>
+
+            @if($customerReviews->isNotEmpty())
+                <div class="row g-4 justify-content-center">
+                    @foreach ($customerReviews as $review)
+                        <div class="col-sm-6 col-lg-4 col-xl-3">
+                            <figure class="nf-review-frame">
+                                <a href="{{ route('review.image', $review) }}" target="_blank" rel="noopener" title="Open full screenshot">
+                                    <img src="{{ route('review.image', $review) }}" alt="Customer review screenshot" loading="lazy">
+                                </a>
+                                <figcaption>
+                                    <div class="nf-review-name">{{ $review->customer_name ?: 'A happy customer' }}</div>
+                                    @if($review->caption)
+                                        <div class="nf-review-caption">{{ $review->caption }}</div>
+                                    @endif
+                                </figcaption>
+                                <span class="nf-review-stamp">Customer Review</span>
+                            </figure>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="nf-review-empty">
+                    <div style="font-size:2.6rem;margin-bottom:0.5rem;">💌</div>
+                    <h5>Screenshots coming soon</h5>
+                    <p style="color:#C9B8C0;margin:0.5rem 0 0;">Real customer moments will be pinned here as they arrive.</p>
+                </div>
+            @endif
+        </div>
+    </section>
+
     <!-- ===== CTA BANNER ===== -->
     <section class="py-5">
         <div class="container">
@@ -1061,10 +1203,18 @@
                     A warm boutique that wraps feelings in golden ribbon, soft pink silk and the gentle flame of love.
                 </p>
                 <div class="mt-4">
-                    <a href="#" class="nf-social"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="nf-social"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="nf-social"><i class="bi bi-whatsapp"></i></a>
-                    <a href="#" class="nf-social"><i class="bi bi-envelope"></i></a>
+                    @if($fb = \App\Models\Setting::get('facebook_page'))
+                        <a href="{{ $fb }}" target="_blank" rel="noopener" class="nf-social" title="Facebook"><i class="bi bi-facebook"></i></a>
+                    @endif
+                    @if($ig = \App\Models\Setting::get('instagram_page'))
+                        <a href="{{ $ig }}" target="_blank" rel="noopener" class="nf-social" title="Instagram"><i class="bi bi-instagram"></i></a>
+                    @endif
+                    @if($wa = \App\Models\Setting::get('whatsapp_number'))
+                        <a href="https://wa.me/{{ preg_replace('/\D/', '', $wa) }}" target="_blank" rel="noopener" class="nf-social" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                    @endif
+                    @if($gm = \App\Models\Setting::get('gmail'))
+                        <a href="mailto:{{ $gm }}" class="nf-social" title="Email"><i class="bi bi-envelope"></i></a>
+                    @endif
                 </div>
             </div>
             <div class="col-6 col-lg-2">

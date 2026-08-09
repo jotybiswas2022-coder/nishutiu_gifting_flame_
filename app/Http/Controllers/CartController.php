@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -28,7 +29,10 @@ class CartController extends Controller
             ];
         }
 
-        return view('frontend.cart', compact('lines', 'total'));
+        $deliveryCharge = (float) Setting::get('delivery_charge', 0);
+        $grandTotal = $total + $deliveryCharge;
+
+        return view('frontend.cart', compact('lines', 'total', 'deliveryCharge', 'grandTotal'));
     }
 
     public function add(Request $request)

@@ -272,9 +272,13 @@
                             <span>Wrapping &amp; ribbon</span>
                             <span style="color:#2FA96B;">Included</span>
                         </div>
+                        <div class="nf-cart-summary-row">
+                            <span>Delivery charge</span>
+                            <span>৳ {{ number_format($deliveryCharge, 2) }}</span>
+                        </div>
                         <div class="nf-cart-summary-total">
                             <span>Total</span>
-                            <span>৳ {{ number_format($total, 2) }}</span>
+                            <span>৳ {{ number_format($grandTotal, 2) }}</span>
                         </div>
                         <a href="{{ route('contact.page') }}" class="nf-checkout-btn mt-3" style="width:auto;">
                             <i class="bi bi-whatsapp"></i> Place order via chat

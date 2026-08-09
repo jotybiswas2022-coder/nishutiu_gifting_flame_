@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\CustomerReview;
 use App\Models\Item;
 use App\Models\Owner;
 
@@ -15,7 +16,9 @@ class SiteController extends Controller
 
         $latestItems = Item::with('category', 'images')->latest()->take(3)->get();
 
-        return view('frontend.index', compact('owners', 'latestItems'));
+        $customerReviews = CustomerReview::latest()->take(8)->get();
+
+        return view('frontend.index', compact('owners', 'latestItems', 'customerReviews'));
     }
 
     public function contact()
