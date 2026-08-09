@@ -25,10 +25,24 @@ use Illuminate\Support\Str;
                 </li>
                 @endif
                 <li class="nav-item">
+                    <a class="nav-link chatbox-navlink-top {{ (request()->is('items') || request()->is('items/*')) ? 'active-navlink-chatbox' : '' }}" href="{{ route('items.index') }}">
+                        <i class="bi bi-gift"></i>
+                        <span>Items</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link chatbox-navlink-top {{ request()->is('contact') ? 'active-navlink-chatbox' : '' }}" href="/contact">
                         <i class="bi bi-envelope"></i>
                         <span>Contact</span>
                     </a>
+                </li>
+                <li class="nav-item chatbox-nav-search">
+                    <form action="{{ route('items.index') }}" method="GET">
+                        <div class="chatbox-top-search">
+                            <i class="bi bi-search"></i>
+                            <input class="chatbox-top-search-field" type="text" name="q" value="{{ request('q') }}" placeholder="Search gifts..." autocomplete="off">
+                        </div>
+                    </form>
                 </li>
             </ul>
         </div>
@@ -1064,6 +1078,63 @@ body.chatbox-message-active {
   .chatbox-auth-right {
     margin-top: 0.5rem !important;
   }
+}
+
+/* ===== SEARCH IN NAVBAR ===== */
+.chatbox-top-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.chatbox-top-search > i {
+    position: absolute;
+    left: 12px;
+    color: #A08A92;
+    font-size: 0.85rem;
+    pointer-events: none;
+}
+
+.chatbox-top-search-field {
+    width: 150px;
+    background: #F6EDF0;
+    border: 1px solid var(--clr-border);
+    border-radius: 50rem;
+    padding: 7px 12px 7px 32px;
+    font-size: 0.8rem;
+    color: var(--clr-text);
+    transition: all 0.25s ease;
+}
+
+.chatbox-top-search-field:focus,
+.chatbox-top-search-field:hover {
+    outline: none;
+    border-color: var(--clr-primary);
+    background: #FFFFFF;
+    width: 190px;
+    box-shadow: 0 0 0 3px rgba(255, 77, 109, 0.14);
+}
+
+.chatbox-top-search-field::placeholder {
+    color: #B9A6AC;
+}
+
+@media (max-width: 991.98px) {
+    .chatbox-nav-search {
+        width: 100%;
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+
+    .chatbox-nav-search form,
+    .chatbox-top-search,
+    .chatbox-top-search-field {
+        width: 100%;
+    }
+
+    .chatbox-top-search-field {
+        max-width: 320px;
+    }
 }
 
 /* Utility Classes */
