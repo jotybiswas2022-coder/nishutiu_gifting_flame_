@@ -123,6 +123,8 @@
     </section>
 </div>
 
+@include('frontend.partials.footer')
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const nfcObserver = new IntersectionObserver(function (entries) {
