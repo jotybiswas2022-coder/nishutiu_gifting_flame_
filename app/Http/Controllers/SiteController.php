@@ -23,13 +23,26 @@ class SiteController extends Controller
         return view('frontend.contact');
     }
 
-    public function itemsRedirect()
+    public function items(Request $request)
     {
-        $category = Category::find(3) ?? Category::has('items')->orderBy('name')->first();
+        $q = trim((string) $request->query('q', ''));
 
-        abort_unless($category, 404);
+        $itemsQuery = Item::with('category', 'images')->latest();
 
-        return redirect()->route('items.category', $category);
+        if ($q !== '') {
+            $itemsQuery->where(function ($query) use ($q) {
+                $query->where('name', 'like', "%{$q}%")
+                    ->orWhere('details', 'like', "%{$q}%");
+            });
+        }
+
+        $items = $itemsQuery->get();
+
+        $categories = Category::has('items')->withCount('items')->orderBy('name')->get();
+
+        $totalItems = $items->count();
+
+        return view('frontend.items', compact('items', 'categories', 'totalItems', 'q'));
     }
 
     public function categoryItems(Request $request, Category $category)
@@ -49,7 +62,9 @@ class SiteController extends Controller
 
         $categories = Category::has('items')->withCount('items')->orderBy('name')->get();
 
-        return view('frontend.category', compact('category', 'items', 'categories', 'q'));
+        $totalItems = Item::count();
+
+        return view('frontend.category', compact('category', 'items', 'categories', 'totalItems', 'q'));
     }
 
     public function show(Item $item)

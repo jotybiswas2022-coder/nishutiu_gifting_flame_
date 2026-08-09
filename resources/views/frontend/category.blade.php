@@ -34,15 +34,7 @@
 
         @include('frontend.partials.shop-search', ['searchAction' => route('items.category', $category)])
 
-        <div class="nf-cat-chips">
-            @foreach($categories as $cat)
-                @if($cat->id == $category->id)
-                    <span class="nf-cat-chip nf-cat-chip-active"><i class="bi bi-check-circle-fill"></i> {{ $cat->name }} <small>({{ $cat->items_count }})</small></span>
-                @else
-                    <a href="{{ route('items.category', $cat) }}" class="nf-cat-chip"><i class="bi bi-box-seam"></i> {{ $cat->name }} <small>({{ $cat->items_count }})</small></a>
-                @endif
-            @endforeach
-        </div>
+        @include('frontend.partials.category-chips', ['currentCategoryId' => $category->id, 'categories' => $categories, 'totalItems' => $totalItems])
 
         @if($items->isNotEmpty())
             <div class="row g-4">
