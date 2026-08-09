@@ -955,6 +955,46 @@
         </div>
     </section>
 
+    <!-- ===== OWNERS ===== -->
+    <section id="owners" class="py-5">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <span class="nf-section-tag">The Founders</span>
+                <h2 class="nf-section-title">The hearts behind <span style="color:#FF4D6D;">NishuTiu</span></h2>
+                <p class="nf-section-sub">Meet the people who warm every ribbon, write every note, and wrap every feeling with love.</p>
+            </div>
+            @if($owners->isNotEmpty())
+                <div class="row g-4 justify-content-center">
+                    @foreach ($owners as $owner)
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="nf-owner-card">
+                                <div class="nf-owner-photo">
+                                    <img src="{{ route('owner.photo', $owner) }}" alt="{{ $owner->name }}" loading="lazy">
+                                </div>
+                                <h5 class="nf-owner-name">{{ $owner->name }}</h5>
+                                <p class="nf-owner-role">Founder &amp; Owner</p>
+                                <div class="nf-owner-social">
+                                    @if($owner->facebook)
+                                        <a href="{{ $owner->facebook }}" target="_blank" rel="noopener" title="Facebook"><i class="bi bi-facebook"></i></a>
+                                    @endif
+                                    @if($owner->instagram)
+                                        <a href="{{ $owner->instagram }}" target="_blank" rel="noopener" title="Instagram"><i class="bi bi-instagram"></i></a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="text-center py-4">
+                    <div style="font-size:3rem;margin-bottom:0.6rem;">🕊️</div>
+                    <h5 class="nf-serif fw-bold">Our founders are getting ready</h5>
+                    <p class="nf-section-sub">Stay close — the faces behind the flame will appear here soon.</p>
+                </div>
+            @endif
+        </div>
+    </section>
+
     <!-- ===== TESTIMONIALS ===== -->
     <section id="gifts" class="py-5" style="background:linear-gradient(180deg,#FFF5F7 0%,#FFE9EE 100%);">
         <div class="container py-4">
@@ -1003,46 +1043,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- ===== OWNERS ===== -->
-    <section id="owners" class="py-5">
-        <div class="container py-4">
-            <div class="text-center mb-5">
-                <span class="nf-section-tag">The Founders</span>
-                <h2 class="nf-section-title">The hearts behind <span style="color:#FF4D6D;">NishuTiu</span></h2>
-                <p class="nf-section-sub">Meet the people who warm every ribbon, write every note, and wrap every feeling with love.</p>
-            </div>
-            @if($owners->isNotEmpty())
-                <div class="row g-4 justify-content-center">
-                    @foreach ($owners as $owner)
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="nf-owner-card">
-                                <div class="nf-owner-photo">
-                                    <img src="{{ route('owner.photo', $owner) }}" alt="{{ $owner->name }}" loading="lazy">
-                                </div>
-                                <h5 class="nf-owner-name">{{ $owner->name }}</h5>
-                                <p class="nf-owner-role">Founder &amp; Owner</p>
-                                <div class="nf-owner-social">
-                                    @if($owner->facebook)
-                                        <a href="{{ $owner->facebook }}" target="_blank" rel="noopener" title="Facebook"><i class="bi bi-facebook"></i></a>
-                                    @endif
-                                    @if($owner->instagram)
-                                        <a href="{{ $owner->instagram }}" target="_blank" rel="noopener" title="Instagram"><i class="bi bi-instagram"></i></a>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="text-center py-4">
-                    <div style="font-size:3rem;margin-bottom:0.6rem;">🕊️</div>
-                    <h5 class="nf-serif fw-bold">Our founders are getting ready</h5>
-                    <p class="nf-section-sub">Stay close — the faces behind the flame will appear here soon.</p>
-                </div>
-            @endif
         </div>
     </section>
 
