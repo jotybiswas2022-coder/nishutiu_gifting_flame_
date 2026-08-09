@@ -1,11 +1,11 @@
 @extends('frontend.app')
 
-@section('title', 'Nishutiu Gifting Flame — Give the Feeling, Not Just a Gift')
+@section('title', 'NishuTiu Gifting Flame — Give the Feeling, Not Just a Gift')
 
 @section('content')
 
 <style>
-    /* ===== Nishutiu Gifting Flame — Homepage ===== */
+    /* ===== NishuTiu Gifting Flame — Homepage ===== */
     .nf-root {
         font-family: 'Inter', sans-serif;
         background: #FFF5F7;
@@ -675,7 +675,7 @@
     <section class="py-5">
         <div class="container py-4">
             <div class="text-center mb-5">
-                <span class="nf-section-tag">Why Nishutiu</span>
+                <span class="nf-section-tag">Why NishuTiu</span>
                 <h2 class="nf-section-title">Gifts carried by <span style="color:#FF4D6D;">real emotion</span></h2>
                 <p class="nf-section-sub">We don't just sell gifts — we translate your feelings into something someone can hold, smile at, and keep forever.</p>
             </div>
@@ -853,7 +853,7 @@
         <div class="container py-4">
             <div class="text-center mb-5">
                 <span class="nf-section-tag">The Founders</span>
-                <h2 class="nf-section-title">The hearts behind <span style="color:#FF4D6D;">Nishutiu</span></h2>
+                <h2 class="nf-section-title">The hearts behind <span style="color:#FF4D6D;">NishuTiu</span></h2>
                 <p class="nf-section-sub">Meet the people who warm every ribbon, write every note, and wrap every feeling with love.</p>
             </div>
             @if($owners->isNotEmpty())
@@ -918,7 +918,7 @@
                 <div class="nf-footer-brand d-flex align-items-center gap-2 mb-3">
                     <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#FF4D6D,#C9184A);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.4rem;"><i class="bi bi-fire"></i></div>
                     <div>
-                        <span class="nf-footer-brand">Nishutiu</span>
+                        <span class="nf-footer-brand">NishuTiu</span>
                         <div class="small" style="letter-spacing:2px;color:#FFD166;text-transform:uppercase;font-weight:600;">Gifting Flame</div>
                     </div>
                 </div>
@@ -960,7 +960,7 @@
     </div>
     <div class="nf-footer-bottom py-3">
         <div class="container d-flex flex-wrap justify-content-center gap-2 small" style="color:#8A6E78;">
-            © {{ date('Y') }} Nishutiu Gifting Flame — Born from the heart, gifted with fire. <i class="bi bi-heart-fill" style="color:#FF4D6D;"></i>
+            © {{ date('Y') }} NishuTiu Gifting Flame — Born from the heart, gifted with fire. <i class="bi bi-heart-fill" style="color:#FF4D6D;"></i>
         </div>
     </div>
 </footer>
