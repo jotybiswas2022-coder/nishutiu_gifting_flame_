@@ -59,6 +59,13 @@ use Illuminate\Support\Str;
     </div>
     <ul class="sidebar-menu">
         <li>
+            <a href="{{ url('/admin/owners') }}"
+               class="{{ request()->is('admin/owners') ? 'active' : '' }}">
+                <i class="bi bi-people-fill"></i>
+                <span>Owner's Info</span>
+            </a>
+        </li>
+        <li>
             <a href="{{ url('/admin/contact') }}"
                class="{{ request()->is('admin/contact') ? 'active' : '' }}">
                 <i class="bi bi-envelope-fill"></i>
