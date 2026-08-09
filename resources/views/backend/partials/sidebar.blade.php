@@ -13,39 +13,13 @@ use Illuminate\Support\Str;
         </div>
 
         <div class="top-nav-right">
-            <button class="nav-toggler" type="button" onclick="document.getElementById('navbarTopNav').classList.toggle('show')">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <button class="sb-toggler" type="button" id="sbToggle" aria-label="Toggle sidebar">
+            <button class="sb-toggler" type="button" id="sbToggle" aria-label="Toggle menu">
                 <i class="bi bi-three-dots-vertical" id="sbToggleIcon"></i>
             </button>
         </div>
 
         <div class="top-nav-links" id="navbarTopNav">
-            <a class="nav-link-custom {{ request()->is('/') ? 'active' : '' }}" href="/">
-                <i class="bi bi-house-door"></i> Home
-            </a>
-
-            @auth
-                @if(auth()->user()->is_admin == 1)
-                    <a class="nav-link-custom {{ Str::startsWith(request()->path(), 'admin') ? 'active' : '' }}" href="/admin">
-                        <i class="bi bi-speedometer2"></i> Admin Panel
-                    </a>
-                @endif
-                <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                    @csrf
-                    <button type="submit" class="nav-link-btn logout-btn">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </button>
-                </form>
-            @else
-                <a class="nav-link-custom {{ request()->is('login') ? 'active' : '' }}" href="/login">
-                    <i class="bi bi-person-circle"></i> Login
-                </a>
-                <a class="nav-link-custom signup-link" href="/register">
-                    <i class="bi bi-person-plus"></i> Signup
-                </a>
-            @endauth
+            @include('backend.partials.auth-links')
         </div>
     </div>
 </nav>
@@ -72,7 +46,23 @@ use Illuminate\Support\Str;
                 <span>Contact</span>
             </a>
         </li>
+        <li class="sidebar-mobile-item">
+            <a href="{{ url('/') }}">
+                <i class="bi bi-house-door"></i>
+                <span>Home</span>
+            </a>
+        </li>
+        <li class="sidebar-mobile-item">
+            <form action="{{ route('logout') }}" method="POST" class="sidebar-logout-form">
+                @csrf
+                <button type="submit" class="sidebar-logout-btn">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Logout</span>
+                </button>
+            </form>
+        </li>
     </ul>
+
     <div class="sidebar-footer">
         <span class="sidebar-version">Connectly v1.0</span>
     </div>
@@ -133,6 +123,39 @@ use Illuminate\Support\Str;
     opacity: 1;
     visibility: visible;
 }
+.sidebar-mobile-item {
+    display: none;
+}
+.sidebar-logout-form {
+    margin: 0;
+}
+.sidebar-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 14px;
+    color: #dc2626;
+    font-weight: 500;
+    font-size: 0.88rem;
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    text-align: left;
+}
+.sidebar-logout-btn i {
+    font-size: 1.05rem;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+}
+.sidebar-logout-btn:hover {
+    background: #fee2e2;
+    color: #b91c1c;
+}
 .top-nav-brand {
     display: flex;
     align-items: center;
@@ -147,16 +170,6 @@ use Illuminate\Support\Str;
     font-size: 1.3rem;
     color: #2563eb;
 }
-.nav-toggler {
-    display: none;
-    background: transparent;
-    border: none;
-    color: #64748b;
-    font-size: 1.3rem;
-    padding: 4px;
-    cursor: pointer;
-}
-.nav-toggler:focus { outline: none; }
 
 .top-nav-links {
     display: flex;
@@ -294,34 +307,10 @@ use Illuminate\Support\Str;
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
     .sb-toggler { display: flex; }
-    .nav-toggler { display: block; }
     .top-nav-inner { gap: 8px; }
     .top-nav-brand { font-size: 0.92rem; }
     .top-nav-brand span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .top-nav-links {
-        display: none;
-        flex-direction: column;
-        align-items: stretch;
-        padding: 8px 0;
-        gap: 2px;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: #ffffff;
-        border-bottom: 1px solid #e2e8f0;
-        box-shadow: 0 8px 16px rgba(15,23,42,0.08);
-        z-index: 99;
-    }
-    .top-nav-links.show {
-        display: flex;
-    }
-    .top-nav-links .nav-link-custom,
-    .top-nav-links .nav-link-btn {
-        padding: 12px 16px;
-        border-radius: 0;
-        justify-content: flex-start;
-    }
+    .top-nav-links { display: none; }
     .sidebar {
         position: fixed;
         top: 0;
@@ -353,6 +342,7 @@ use Illuminate\Support\Str;
     }
     .sidebar-menu li { margin-bottom: 2px; flex-shrink: 1; }
     .sidebar-menu a { font-size: 0.88rem; padding: 10px 14px; white-space: normal; }
+    .sidebar-mobile-item { display: list-item; }
     .sidebar-footer { display: block; }
 }
 
